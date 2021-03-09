@@ -2,15 +2,41 @@
 //  DO NOT MODIFY NEXT LINE
 //------------------------------
 #include <string>
+#include <iostream>
+#include <iomanip>
 #include "catch.hpp"
+#include <string>
 using Catch::Matchers::Equals;
+using namespace std;
 //------------------------------
 
 // Fix the following class
 class Complex {
-    void operator>>(std::string&) const;
-    void operator<<(const std::string&);
+  private:
+  int x, y;
+
+  public:
+  Complex(int a = 0, int b = 0) : x{a}, y{b};
+
+  int re() const{return x;};
+  int im() const{return y;};
+
+  istream& operator>>(std::string& g)
+  {
+  input.ignore();
+  input >> setw(3) >> g.x;
+  input >> setw(3) >> g.y;
+  input.ignore();
+  return input;
+  };
+  ostream& operator<<(const std::string& f)
+  {
+  output << f.x << f.y << "i";
+  };
+
 };
+
+
 
 //------------------------------
 //   DO NOT MODIFY TEST CASES
