@@ -5,7 +5,6 @@
 #include <iostream>
 #include <iomanip>
 #include "catch.hpp"
-#include <string>
 using Catch::Matchers::Equals;
 using namespace std;
 //------------------------------
@@ -21,20 +20,28 @@ class Complex {
   int re() const{return x;};
   int im() const{return y;};
 
-  istream& operator>>(std::string& g)
-  {
-  input.ignore();
-  input >> setw(3) >> g.x;
-  input >> setw(3) >> g.y;
-  input.ignore();
-  return input;
-  };
-  ostream& operator<<(const std::string& f)
-  {
-  output << f.x << f.y << "i";
-  };
-
+  friend istream& operator>>(istream&, Complex&);
+  friend ostream& operator<<(ostream&, const Complex&);
 };
+
+std::istream& operator>>(istream& input, Complex& g)
+{
+  input >> g.x;
+  input >> g.y >> "i";
+  return input;
+};
+std::ostream& operator<<(ostream& output, const Complex& g);
+{
+  string s = g;
+  output << g.x;
+  if(g.y < 0)
+  output << "-" << g.y << "i" << endl;
+  else
+  output << "+" << g.y << "i" << endl;
+
+  return output;
+};
+
 
 
 
