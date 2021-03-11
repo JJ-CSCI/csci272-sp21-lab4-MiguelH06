@@ -21,29 +21,39 @@ class Complex {
   int im() const{return y;};
 
   friend istream& operator>>(istream&, Complex&);
-  friend ostream& operator<<(ostream&, const Complex&);
+  void operator<<(const string& c)
+  {
+    size_t pos{0};
+    string imag;
+    for(size_t i{0}; i < c.lenght(); i++)
+    {
+      if(c[i] == "+" || c[i] == -)
+      pos = i;
+    }
+    imag = c.substr(pos);
+    x = stoi(s);
+    y = stoi(imag);
+  };
 };
 
-std::istream& operator>>(istream& input, Complex& g)
+istream& operator>>(istream& input, Complex& g)
 {
-  input >> g.x;
-  input >> g.y >> "i";
-  return input;
+  string a, b;
+  a = g.x;
+  b = g.y;
+  input >> showpos >> to_string(g.x);
+  if(to_string(g.y) < 0)
+  {
+    input << "-" << g.y << "i" << endl;
+    return input;
+  }
+  
+  else if (to_string(g.y) >= 0)
+  {
+    input << "+" << g.y << "i" << endl;
+    return input;
+  }
 };
-std::ostream& operator<<(ostream& output, const Complex& g);
-{
-  string s = g;
-  output << g.x;
-  if(g.y < 0)
-  output << "-" << g.y << "i" << endl;
-  else
-  output << "+" << g.y << "i" << endl;
-
-  return output;
-};
-
-
-
 
 //------------------------------
 //   DO NOT MODIFY TEST CASES
